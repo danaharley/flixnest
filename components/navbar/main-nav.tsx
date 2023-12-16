@@ -32,8 +32,8 @@ export const MainNav = ({ routes, active }: MainNavProps) => {
                 size="sm"
                 variant={active === route.href ? "default" : "ghost"}
                 className={cn(
-                  "font-semibold",
-                  active === route.href && "font-bold",
+                  "font-semibold text-muted-foreground",
+                  active === route.href && "font-bold text-primary-foreground",
                 )}
               >
                 {route.title}

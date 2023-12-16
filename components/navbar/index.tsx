@@ -41,8 +41,8 @@ export const Navbar = () => {
   return (
     <header
       className={cn(
-        "sticky top-0 z-40 w-full border-b bg-transparent shadow-sm",
-        isScrolled && "bg-background",
+        "sticky top-0 z-40 w-full border-b-0 bg-transparent",
+        isScrolled && "border-b bg-background shadow-sm",
       )}
     >
       <div className="flex h-16 items-center justify-between space-x-4 px-4">
