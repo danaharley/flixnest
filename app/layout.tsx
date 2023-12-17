@@ -35,7 +35,7 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative min-h-screen">
+          <div className="relative min-h-screen overflow-hidden">
             <Navbar />
             {children}
           </div>

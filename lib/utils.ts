@@ -71,4 +71,22 @@ export const api = {
   getGenres: (mediaType: MediaType) => {
     return makeGet<{ genres: Genre[] }>(`/genre/${mediaType}/list?language=en`);
   },
+
+  getPopular: (mediaType: MediaType) => {
+    return makeGet<{
+      page: number;
+      results: Movie[];
+      total_pages: number;
+      total_results: number;
+    }>(`/${mediaType}/popular?language=en-US`);
+  },
+
+  getTopRated: (mediaType: MediaType) => {
+    return makeGet<{
+      page: number;
+      results: Movie[];
+      total_pages: number;
+      total_results: number;
+    }>(`/${mediaType}/top_rated?language=en-US`);
+  },
 };
