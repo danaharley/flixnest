@@ -10,7 +10,7 @@ export const Genres = ({ genres }: GenresProps) => {
   return (
     <>
       {genres.map((genre) => (
-        <Badge key={genre.id} className="px-3 py-1.5">
+        <Badge key={genre.id} className="px-2.5 py-1 md:px-3 md:py-1.5">
           {genre.name}
         </Badge>
       ))}

@@ -9,9 +9,9 @@ const Home = async () => {
   ]);
 
   return (
-    <div className="min-h-screen">
+    <main>
       <HeroSlide movies={movies} genres={genres} />
-    </div>
+    </main>
   );
 };
 

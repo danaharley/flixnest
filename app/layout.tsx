@@ -35,9 +35,9 @@ export default function RootLayout({
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="relative flex min-h-screen flex-col">
+          <div className="relative min-h-screen">
             <Navbar />
-            <main className="flex-1">{children}</main>
+            {children}
           </div>
           <Footer />
         </ThemeProvider>
