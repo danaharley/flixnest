@@ -13,7 +13,7 @@ export const siteConfig = {
     },
     {
       title: "Movies",
-      href: "/movies",
+      href: "/movie",
       icon: Film,
     },
     {

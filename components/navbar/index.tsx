@@ -42,7 +42,7 @@ export const Navbar = () => {
     <header
       className={cn(
         "fixed top-0 z-50 h-16 w-full bg-transparent transition-all",
-        isScrolled && "border-b bg-background shadow-sm",
+        isScrolled && "bg-background shadow-sm",
       )}
     >
       <div className="flex h-16 items-center justify-between space-x-4 px-4">

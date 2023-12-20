@@ -21,7 +21,7 @@ const Home = async () => {
   ]);
 
   return (
-    <main className="mb-20 space-y-20 md:space-y-16">
+    <div className="mb-20 space-y-20 md:space-y-16">
       <HeroSlide movies={movies} genres={genres} />
       <div className="ml-4 space-y-16 md:ml-8 lg:ml-10 xl:ml-14">
         <Section title="Popular Movies" movies={popularMovies} />
@@ -29,7 +29,7 @@ const Home = async () => {
         <Section title="Top Rated Movies" movies={topRatedMovies} />
         <Section title="Top Rated Series" movies={topRatedSeries} />
       </div>
-    </main>
+    </div>
   );
 };
 
