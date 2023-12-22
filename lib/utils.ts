@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { Genre, MediaType, Movie } from "@/types";
+import { Genre, MediaInfo, MediaType } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -57,36 +57,49 @@ export const makePost = async <TRequest, TResponse>(
 };
 
 export const api = {
-  getDiscover: (mediaType: MediaType) => {
-    return makeGet<{
+  getDiscover: async <T extends MediaType>({
+    mediaType,
+  }: {
+    mediaType: T;
+  }): Promise<{
+    page: number;
+    results: Array<MediaInfo<T>>;
+    total_pages: number;
+    total_results: number;
+  }> => {
+    return await makeGet<{
       page: number;
-      results: Movie[];
+      results: Array<MediaInfo<T>>;
       total_pages: number;
       total_results: number;
     }>(
-      `/discover/${mediaType}?include_adult=true&include_video=true&language=en-US&page=1&sort_by=popularity.desc`,
+      `/discover/${mediaType}?include_adult=true&include_video=true&language=en-US&sort_by=popularity.desc`,
     );
   },
 
-  getGenres: (mediaType: MediaType) => {
+  getGenreList: ({ mediaType }: { mediaType: MediaType }) => {
     return makeGet<{ genres: Genre[] }>(`/genre/${mediaType}/list?language=en`);
   },
 
-  getPopular: (mediaType: MediaType) => {
-    return makeGet<{
+  getMedia: async <T extends MediaType>({
+    mediaType,
+    mediaCategory,
+    page = 1,
+  }: {
+    mediaType: T;
+    mediaCategory: string;
+    page: number;
+  }): Promise<{
+    page: number;
+    results: Array<MediaInfo<T>>;
+    total_pages: number;
+    total_results: number;
+  }> => {
+    return await makeGet<{
       page: number;
-      results: Movie[];
+      results: Array<MediaInfo<T>>;
       total_pages: number;
       total_results: number;
-    }>(`/${mediaType}/popular?language=en-US`);
-  },
-
-  getTopRated: (mediaType: MediaType) => {
-    return makeGet<{
-      page: number;
-      results: Movie[];
-      total_pages: number;
-      total_results: number;
-    }>(`/${mediaType}/top_rated?language=en-US`);
+    }>(`/${mediaType}/${mediaCategory}?language=en-US&page=${page}`);
   },
 };

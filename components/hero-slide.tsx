@@ -6,15 +6,19 @@ import { CustomCircularProgressbar } from "@/components/custom-circular-progress
 import { Genres } from "@/components/genres";
 
 import { backdropPath } from "@/lib/utils";
+import { getAltText, isMovie } from "@/lib/helpers";
 
-import { Genre, Movie } from "@/types";
+import { Genre, MediaInfo, MediaType } from "@/types";
 
-type HeroSlideProps = {
-  movies: Movie[];
+type HeroSlideProps<T extends MediaType> = {
+  movies: Array<MediaInfo<T>>;
   genres: Genre[];
 };
 
-export const HeroSlide = ({ movies, genres }: HeroSlideProps) => {
+export const HeroSlide = <T extends MediaType>({
+  movies,
+  genres,
+}: HeroSlideProps<T>) => {
   const randomMovie = movies[Math.floor(Math.random() * movies.length)];
 
   const selectedGenres = genres.filter((genre) =>
@@ -29,7 +33,7 @@ export const HeroSlide = ({ movies, genres }: HeroSlideProps) => {
             src={backdropPath(
               randomMovie.backdrop_path || randomMovie.poster_path,
             )}
-            alt={randomMovie.title}
+            alt={getAltText(randomMovie)}
             className="object-cover"
             fill
             sizes="100%"
@@ -37,10 +41,9 @@ export const HeroSlide = ({ movies, genres }: HeroSlideProps) => {
           <div className="absolute inset-0 block h-full w-full bg-gradient-to-b from-transparent to-background" />
         </figure>
         <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl xl:text-6xl">
-          {randomMovie.title ||
-            randomMovie.original_title ||
-            randomMovie.name ||
-            randomMovie.original_name}
+          {isMovie(randomMovie)
+            ? randomMovie.title || randomMovie.original_title
+            : randomMovie.name || randomMovie.original_name}
         </h1>
         <div className="flex items-center space-x-4">
           <CustomCircularProgressbar percentage={randomMovie.vote_average} />
