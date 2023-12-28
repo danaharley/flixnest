@@ -58,7 +58,11 @@ export const Section = <T extends MediaType>({
           className="flex items-center gap-2 overflow-x-auto scrollbar-hide"
           ref={directionRef}
         >
-          <MovieCard mediaType={mediaType} movies={movies} />
+          <MovieCard
+            className="h-48 w-32 shrink-0 rounded md:h-52 md:w-[138px] 2xl:h-72 2xl:w-48"
+            mediaType={mediaType}
+            movies={movies}
+          />
         </div>
         <div
           className="group/icon absolute bottom-0 right-0 top-0 z-40 m-auto hidden h-full w-10 items-center justify-center bg-primary/10 opacity-0 transition duration-300 ease-in-out hover:cursor-pointer group-hover:opacity-100 group-hover:backdrop-blur-sm lg:flex"

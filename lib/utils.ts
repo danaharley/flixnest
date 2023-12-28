@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { Genre, MediaInfo, MediaType } from "@/types";
+import { Genre, MediaCategoryInfo, MediaInfo, MediaType } from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -87,7 +87,8 @@ export const api = {
     page = 1,
   }: {
     mediaType: T;
-    mediaCategory: string;
+    mediaCategory: MediaCategoryInfo<T>;
+    // mediaCategory: string;
     page: number;
   }): Promise<{
     page: number;

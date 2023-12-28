@@ -9,11 +9,12 @@ import { MediaInfo, MediaType } from "@/types";
 type MovieCardProps<T extends MediaType> = {
   mediaType: T;
   movies: Array<MediaInfo<T>>;
-};
+} & React.ComponentPropsWithoutRef<"figure">;
 
 export const MovieCard = <T extends MediaType>({
   mediaType,
   movies,
+  className,
 }: MovieCardProps<T>) => {
   const handleLoadImage = (e: React.ChangeEvent<HTMLImageElement>) =>
     e.target.classList.remove("opacity-0");
@@ -22,11 +23,7 @@ export const MovieCard = <T extends MediaType>({
     <>
       {movies.map((movie) => (
         <Link key={movie.id} href={`/${mediaType}/${movie.id}`}>
-          <figure
-            className={cn(
-              "relative h-48 w-32 shrink-0 rounded bg-muted/50 md:h-52 md:w-[138px] 2xl:h-72 2xl:w-48",
-            )}
-          >
+          <figure className={cn("relative bg-muted/50", className)}>
             <Image
               src={backdropPath(movie.poster_path)}
               alt={getAltText(movie)}

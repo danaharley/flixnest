@@ -5,15 +5,13 @@ import { api } from "@/lib/utils";
 
 const Home = async () => {
   const [
-    movies,
-    genres,
+    discoverMovies,
     popularMovies,
     popularSeries,
     topRatedMovies,
     topRatedSeries,
   ] = await Promise.all([
     api.getDiscover({ mediaType: "movie" }).then((res) => res.results),
-    api.getGenreList({ mediaType: "movie" }).then((res) => res.genres),
     api
       .getMedia({
         mediaType: "movie",
@@ -46,7 +44,7 @@ const Home = async () => {
 
   return (
     <div className="mb-20 space-y-20 md:space-y-16">
-      <HeroSlide movies={movies} genres={genres} />
+      <HeroSlide movies={discoverMovies} />
       <div className="ml-4 space-y-16 md:ml-8 lg:ml-10 xl:ml-14">
         <Section
           title="Popular Movies"

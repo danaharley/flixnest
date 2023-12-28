@@ -5,20 +5,22 @@ import { Button } from "@/components/ui/button";
 import { CustomCircularProgressbar } from "@/components/custom-circular-progressbar";
 import { Genres } from "@/components/genres";
 
-import { backdropPath } from "@/lib/utils";
+import { api, backdropPath } from "@/lib/utils";
 import { getAltText, isMovie } from "@/lib/helpers";
 
-import { Genre, MediaInfo, MediaType } from "@/types";
+import { MediaInfo, MediaType } from "@/types";
 
 type HeroSlideProps<T extends MediaType> = {
   movies: Array<MediaInfo<T>>;
-  genres: Genre[];
 };
 
-export const HeroSlide = <T extends MediaType>({
+export const HeroSlide = async <T extends MediaType>({
   movies,
-  genres,
 }: HeroSlideProps<T>) => {
+  const genres = await api
+    .getGenreList({ mediaType: "movie" })
+    .then((res) => res.genres);
+
   const randomMovie = movies[Math.floor(Math.random() * movies.length)];
 
   const selectedGenres = genres.filter((genre) =>
@@ -27,7 +29,7 @@ export const HeroSlide = <T extends MediaType>({
 
   return (
     <section className="relative flex h-[60vh] flex-col justify-end">
-      <div className="ml-4 space-y-6 md:ml-8 lg:ml-10 xl:ml-14">
+      <div className="ml-4 space-y-6 pr-4 md:ml-8 lg:ml-10 xl:ml-[7%]">
         <figure className="absolute left-0 top-0 -z-10 h-[40vh] w-screen md:h-[75vh] xl:h-screen">
           <Image
             src={backdropPath(
