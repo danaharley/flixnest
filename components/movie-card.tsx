@@ -21,9 +21,9 @@ export const MovieCard = <T extends MediaType>({
 
   return (
     <>
-      {movies.map((movie) => (
+      {movies.map((movie, idx) => (
         <Link
-          key={movie.id}
+          key={idx}
           href={`/${mediaType}/${movie.id}-${getAltText(movie).toLowerCase()}`}
         >
           <figure className={cn("relative bg-muted/50", className)}>

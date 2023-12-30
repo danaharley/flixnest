@@ -41,4 +41,23 @@ export const siteConfig = {
       label: "Upcoming",
     },
   ],
+
+  tvCategoryLists: [
+    {
+      value: "airing_today",
+      label: "Airing Today",
+    },
+    {
+      value: "on_the_air",
+      label: "On The Air",
+    },
+    {
+      value: "popular",
+      label: "Popular",
+    },
+    {
+      value: "top_rated",
+      label: "Top Rated",
+    },
+  ],
 };
