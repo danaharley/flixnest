@@ -5,35 +5,43 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { MovieCard } from "@/components/movie-card";
 
-import { MediaInfo, MediaType } from "@/types";
+import { usePrevious } from "@/hooks/use-previous";
+
 import { fetchMovies } from "@/actions";
+
+import { MediaCategoryInfo, MediaInfo, MediaType } from "@/types";
 
 type LoadMoreProps<T extends MediaType> = {
   mediaType: T;
+  mediaCategory: MediaCategoryInfo<T>;
   data: Array<MediaInfo<T>>;
 };
 
 export const LoadMore = <T extends MediaType>({
   mediaType,
+  mediaCategory,
   data,
 }: LoadMoreProps<T>) => {
   const [movies, setMovies] = useState<Array<MediaInfo<T>>>(data);
   const [page, setPage] = useState(1);
 
+  const prevMediaType = usePrevious(mediaCategory);
+
   useEffect(() => {
-    fetchMovies({ mediaType: "movie", mediaCategory: "popular", page }).then(
-      (res) => {
-        if (res && res.results.length) {
-          if (page !== 1) {
-            setMovies((prevData: MediaInfo<T>[]) => [
-              ...(prevData.length ? prevData : []),
-              ...(res.results as MediaInfo<T>[]),
-            ]);
-          }
+    fetchMovies({ mediaType, mediaCategory, page }).then((res) => {
+      if (res && res.results.length) {
+        if (page !== 1 && mediaCategory === prevMediaType) {
+          setMovies((prevData: MediaInfo<T>[]) => [
+            ...(prevData.length ? prevData : []),
+            ...(res.results as MediaInfo<T>[]),
+          ]);
+        } else {
+          setMovies(data);
+          setPage(1);
         }
-      },
-    );
-  }, [page]);
+      }
+    });
+  }, [page, mediaCategory, mediaType, prevMediaType]);
 
   const onLoadMore = () => setPage(page + 1);
 

@@ -22,7 +22,10 @@ export const MovieCard = <T extends MediaType>({
   return (
     <>
       {movies.map((movie) => (
-        <Link key={movie.id} href={`/${mediaType}/${movie.id}`}>
+        <Link
+          key={movie.id}
+          href={`/${mediaType}/${movie.id}-${getAltText(movie).toLowerCase()}`}
+        >
           <figure className={cn("relative bg-muted/50", className)}>
             <Image
               src={backdropPath(movie.poster_path)}
