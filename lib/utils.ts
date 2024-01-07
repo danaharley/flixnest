@@ -1,7 +1,18 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-import { Genre, MediaCategoryInfo, MediaInfo, MediaType } from "@/types";
+import {
+  Backdrop,
+  Cast,
+  Crew,
+  Genre,
+  MediaCategoryInfo,
+  MediaDetailInfo,
+  MediaInfo,
+  MediaType,
+  Poster,
+  Video,
+} from "@/types";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -14,6 +25,9 @@ export const backdropPath = (imgUrl: string) =>
 
 export const posterPath = (imgUrl: string) =>
   `https://image.tmdb.org/t/p/w500${imgUrl}`;
+
+export const youtubePath = (source: string) =>
+  `https://www.youtube.com/embed/${source}`;
 
 export const makeGet = async <T>(
   url: string,
@@ -88,7 +102,6 @@ export const api = {
   }: {
     mediaType: T;
     mediaCategory: MediaCategoryInfo<T>;
-    // mediaCategory: string;
     page: number;
   }): Promise<{
     page: number;
@@ -102,5 +115,67 @@ export const api = {
       total_pages: number;
       total_results: number;
     }>(`/${mediaType}/${mediaCategory}?language=en-US&page=${page}`);
+  },
+
+  getMediaDetails: async <T extends MediaType>({
+    mediaType,
+    mediaId,
+  }: {
+    mediaType: T;
+    mediaId: number;
+  }): Promise<MediaDetailInfo<T>> => {
+    return await makeGet<MediaDetailInfo<T>>(
+      `/${mediaType}/${mediaId}?language=en-US`,
+    );
+  },
+
+  getMediaCredits: async <T extends MediaType>({
+    mediaType,
+    mediaId,
+  }: {
+    mediaType: T;
+    mediaId: number;
+  }): Promise<{
+    id: number;
+    cast: Cast[];
+    crew: Crew[];
+  }> => {
+    return await makeGet<{
+      id: number;
+      cast: Cast[];
+      crew: Crew[];
+    }>(`/${mediaType}/${mediaId}/credits?language=en-US`);
+  },
+
+  getMediaVideos: async <T extends MediaType>({
+    mediaType,
+    mediaId,
+  }: {
+    mediaType: T;
+    mediaId: number;
+  }): Promise<{
+    id: number;
+    results: Video[];
+  }> => {
+    return await makeGet<{
+      id: number;
+      results: Video[];
+    }>(`/${mediaType}/${mediaId}/videos?language=en-US`);
+  },
+
+  getMediaPhotos: async <T extends MediaType>({
+    mediaType,
+    mediaId,
+  }: {
+    mediaType: T;
+    mediaId: number;
+  }): Promise<{
+    backdrops: Backdrop[];
+    posters: Poster[];
+  }> => {
+    return await makeGet<{
+      backdrops: Backdrop[];
+      posters: Poster[];
+    }>(`/${mediaType}/${mediaId}/images`);
   },
 };

@@ -77,3 +77,20 @@
     @apply !fill-secondary-foreground !text-2xl !font-bold;
   }
 }
+
+.swiper-pagination-bullet {
+  background-color: brown !important;
+}
+
+.swiper-button-prev::after,
+.swiper-button-next::after {
+  font-size: 1rem !important;
+  color: brown !important;
+}
+
+@media screen and (min-width: 1024px) {
+  .swiper-button-prev::after,
+  .swiper-button-next::after {
+    font-size: 2rem !important;
+  }
+}
