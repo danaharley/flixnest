@@ -44,7 +44,9 @@ export const MediaDetailInfo = <T extends MediaType>({
           <CustomCircularProgressbar
             percentage={parseFloat(movie.vote_average.toFixed(1))}
           />
-          <Genres genres={movie.genres} />
+          <div className="space-x-2 space-y-1.5">
+            <Genres genres={movie.genres} />
+          </div>
         </div>
         <p>{movie.overview}</p>
         <Button className="max-w-[168px] uppercase">
