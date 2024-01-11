@@ -178,4 +178,26 @@ export const api = {
       posters: Poster[];
     }>(`/${mediaType}/${mediaId}/images`);
   },
+
+  getRecommendations: async <T extends MediaType>({
+    mediaType,
+    mediaId,
+    page = 1,
+  }: {
+    mediaType: T;
+    mediaId: number;
+    page: number;
+  }): Promise<{
+    page: number;
+    results: Array<MediaInfo<T>>;
+    total_pages: number;
+    total_results: number;
+  }> => {
+    return await makeGet<{
+      page: number;
+      results: Array<MediaInfo<T>>;
+      total_pages: number;
+      total_results: number;
+    }>(`/${mediaType}/${mediaId}/recommendations?language=en-US&page=${page}`);
+  },
 };

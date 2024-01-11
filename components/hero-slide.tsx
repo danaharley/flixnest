@@ -9,6 +9,7 @@ import { api, backdropPath } from "@/lib/utils";
 import { getAltText, isMovie } from "@/lib/helpers";
 
 import { MediaInfo, MediaType } from "@/types";
+import Link from "next/link";
 
 type HeroSlideProps<T extends MediaType> = {
   movies: Array<MediaInfo<T>>;
@@ -48,7 +49,9 @@ export const HeroSlide = async <T extends MediaType>({
             : randomMovie.name || randomMovie.original_name}
         </h1>
         <div className="flex items-center space-x-4">
-          <CustomCircularProgressbar percentage={randomMovie.vote_average} />
+          <CustomCircularProgressbar
+            percentage={parseFloat(randomMovie.vote_average.toFixed(1))}
+          />
           <div className="space-x-2 space-y-1.5">
             <Genres genres={selectedGenres} />
           </div>
@@ -56,9 +59,11 @@ export const HeroSlide = async <T extends MediaType>({
         <p className="line-clamp-3 max-w-md text-sm md:line-clamp-4 md:max-w-2xl md:text-lg">
           {randomMovie.overview}
         </p>
-        <Button className="uppercase">
-          <Play className="mr-3 h-4 w-4" />
-          Watch Now
+        <Button className="uppercase" asChild>
+          <Link href={`/movie/${randomMovie.id}`}>
+            <Play className="mr-3 h-4 w-4" />
+            Watch Now
+          </Link>
         </Button>
       </div>
     </section>

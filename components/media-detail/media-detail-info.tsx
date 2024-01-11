@@ -32,7 +32,9 @@ export const MediaDetailInfo = ({ movie, cast }: MediaDetailInfoProps) => {
           {movie.title || movie.original_title}
         </h1>
         <div className="flex items-center space-x-4">
-          <CustomCircularProgressbar percentage={movie.vote_average} />
+          <CustomCircularProgressbar
+            percentage={parseFloat(movie.vote_average.toFixed(1))}
+          />
           <Genres genres={movie.genres} />
         </div>
         <p>{movie.overview}</p>
