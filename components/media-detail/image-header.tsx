@@ -2,14 +2,22 @@ import Image from "next/image";
 
 import { backdropPath } from "@/lib/utils";
 
-import { MovieDetails } from "@/types";
+import { getAltTextDetail } from "@/lib/helpers";
 
-export const ImageHeader = ({ movie }: { movie: MovieDetails }) => {
+import { MediaDetailInfo, MediaType } from "@/types";
+
+export type ImageHeaderProps<T extends MediaType> = {
+  movie: MediaDetailInfo<T>;
+};
+
+export const ImageHeader = <T extends MediaType>({
+  movie,
+}: ImageHeaderProps<T>) => {
   return (
     <figure className="absolute top-0 -z-10 min-h-screen w-screen">
       <Image
         src={backdropPath(movie.backdrop_path)}
-        alt={movie.title || movie.original_title}
+        alt={getAltTextDetail(movie)}
         fill
         className="object-cover"
       />

@@ -9,27 +9,36 @@ import { MediaPersonSlide } from "@/components/media-detail/swiper/media-person-
 
 import { backdropPath } from "@/lib/utils";
 
-import { Cast, MovieDetails } from "@/types";
+import { getAltTextDetail } from "@/lib/helpers";
 
-export type MediaDetailInfoProps = {
-  movie: MovieDetails;
+import {
+  Cast,
+  MediaDetailInfo as MediaDetailInfoType,
+  MediaType,
+} from "@/types";
+
+export type MediaDetailInfoProps<T extends MediaType> = {
+  movie: MediaDetailInfoType<T>;
   cast: Array<Cast>;
 };
 
-export const MediaDetailInfo = ({ movie, cast }: MediaDetailInfoProps) => {
+export const MediaDetailInfo = <T extends MediaType>({
+  movie,
+  cast,
+}: MediaDetailInfoProps<T>) => {
   return (
     <div className="flex flex-col items-center space-y-8 lg:ml-4 lg:flex-row lg:items-start lg:space-y-0 xl:ml-0">
       <figure className="relative h-96 w-64 shrink-0 bg-muted/50 md:h-[523px] md:w-[375px] lg:h-[540px] lg:w-[360px] xl:h-[725px] xl:w-[514px]">
         <Image
           src={backdropPath(movie.poster_path)}
-          alt={movie.title || movie.original_title}
+          alt={getAltTextDetail(movie)}
           fill
           className="object-cover"
         />
       </figure>
       <div className="mx-4 flex flex-col space-y-9 lg:ml-8 xl:ml-10 xl:mr-0">
         <h1 className="text-3xl font-bold md:text-4xl xl:line-clamp-2 xl:text-7xl">
-          {movie.title || movie.original_title}
+          {getAltTextDetail(movie)}
         </h1>
         <div className="flex items-center space-x-4">
           <CustomCircularProgressbar
